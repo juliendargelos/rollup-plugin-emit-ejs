@@ -1,11 +1,11 @@
 {
   "name": "rollup-plugin-emit-ejs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Emit files from ejs with rollup",
   "main": "index.js",
   "types": "index.d.ts",
-  "repository": "https://github.com/juliendargelos/rollup-plugin-emit-ejs",
-  "author": "Julien Dargelos <contac@t@juliendargelos.com>",
+  "repository": "juliendargelos/rollup-plugin-emit-ejs",
+  "author": "Julien Dargelos <contact@juliendargelos.com>",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
