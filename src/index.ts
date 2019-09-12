@@ -90,7 +90,7 @@ export default ({
 
         await fs.writeFile(file, builtLinks.reduce((content, link) => (
           content.replace(link.identifier, link.files.map(linkFile => (
-            link.print(path.relative(file, linkFile).replace(/^\.\//, ''))
+            link.print(path.relative(path.dirname(file), linkFile))
           )).join(''))
         ), (await fs.readFile(file)).toString()))
       })()))

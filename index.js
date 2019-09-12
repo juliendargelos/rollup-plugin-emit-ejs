@@ -51,7 +51,7 @@ exports.default = ({ src, include = '**/*.ejs', exclude = [], extension = undefi
             await Promise.all(files.map(file => (async () => {
                 if (!(await fs_extra_1.default.pathExists(file)))
                     return;
-                await fs_extra_1.default.writeFile(file, builtLinks.reduce((content, link) => (content.replace(link.identifier, link.files.map(linkFile => (link.print(path_1.default.relative(file, linkFile).replace(/^\.\//, '')))).join(''))), (await fs_extra_1.default.readFile(file)).toString()));
+                await fs_extra_1.default.writeFile(file, builtLinks.reduce((content, link) => (content.replace(link.identifier, link.files.map(linkFile => (link.print(path_1.default.relative(path_1.default.dirname(file), linkFile)))).join(''))), (await fs_extra_1.default.readFile(file)).toString()));
             })()));
         }
     };
