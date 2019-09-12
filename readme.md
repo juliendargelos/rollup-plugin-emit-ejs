@@ -4,6 +4,8 @@ This plugin allows you to emit files from ejs templates to rollup bundle.
 
 It is primarily meant to emit html files since it helps you to link bundled javascripts/stylesheets and includes a basic layout system, but it can deal with any file type.
 
+Unlike [rollup-plugin-bundle-html](https://github.com/haifeng2013/rollup-plugin-bundle-html), this plugin uses the [emitFile()](https://rollupjs.org/guide/en/#thisemitfileemittedfile-emittedchunk--emittedasset--string) plugin context method which allow other plugins to process the emitted files.
+
 ## Install
 
 ```bash
