@@ -1,0 +1,29 @@
+{
+  "name": "rollup-plugin-emit-ejs",
+  "version": "1.0.0",
+  "description": "Emit files from ejs with rollup",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "repository": "https://github.com/juliendargelos/rollup-plugin-emit-ejs",
+  "author": "Julien Dargelos <contac@t@juliendargelos.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w --noEmit"
+  },
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "fast-glob": "^3.0.4",
+    "fs-extra": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/ejs": "^2.6.3",
+    "@types/fs-extra": "^8.0.0",
+    "@types/node": "^12.7.5",
+    "@types/rollup": "^0.54.0",
+    "typescript": "^3.6.3"
+  },
+  "peerDependencies": {
+    "rollup": "^1.21.2"
+  }
+}
