@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-emit-ejs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Emit files from ejs with rollup",
   "main": "index.js",
   "types": "index.d.ts",
