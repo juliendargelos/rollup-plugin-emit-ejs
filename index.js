@@ -17,7 +17,7 @@ const render = async (file, layout, data, options) => layout
         content: render(file, undefined, data, options)
     }, options)
     : ejs_1.default.render((await fs_extra_1.default.readFile(file)).toString(), { ...data, javascripts, stylesheets }, { ...options, filename: file });
-exports.default = ({ src, include = '**/*.ejs', exclude = [], extension = undefined, layout = undefined, javascript = file => `<script src=${file}></script>`, stylesheet = file => `<link rel="stylesheet" href=${file}>`, data = {}, options = {} }) => {
+exports.default = ({ src, include = '**/*.ejs', exclude = [], extension = undefined, layout = undefined, javascript = file => `<script src="${file}"></script>`, stylesheet = file => `<link rel="stylesheet" href="${file}">`, data = {}, options = {} }) => {
     let dest, files;
     const ignore = Array.isArray(exclude) ? exclude : [exclude];
     const links = [
