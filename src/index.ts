@@ -17,7 +17,7 @@ const render = async (
       ...data,
       javascripts,
       stylesheets,
-      content: render(file, undefined, data, options)
+      content: await render(file, undefined, data, options)
     }, options)
   : ejs.render(
       (await fs.readFile(file)).toString(),
@@ -54,7 +54,7 @@ export default ({
   ]
 
   extension = extension ? '.' + extension.replace(/^\./, '') : ''
-  layout && ignore.push(layout)
+  layout && ignore.push(path.relative(src, layout))
 
   return {
     name: 'emit-ejs',

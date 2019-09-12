@@ -14,7 +14,7 @@ const render = async (file, layout, data, options) => layout
         ...data,
         javascripts,
         stylesheets,
-        content: render(file, undefined, data, options)
+        content: await render(file, undefined, data, options)
     }, options)
     : ejs_1.default.render((await fs_extra_1.default.readFile(file)).toString(), { ...data, javascripts, stylesheets }, { ...options, filename: file });
 exports.default = ({ src, include = '**/*.ejs', exclude = [], extension = undefined, layout = undefined, javascript = file => `<script src="${file}"></script>`, stylesheet = file => `<link rel="stylesheet" href="${file}">`, data = {}, options = {} }) => {
@@ -25,7 +25,7 @@ exports.default = ({ src, include = '**/*.ejs', exclude = [], extension = undefi
         { identifier: javascripts, print: javascript, glob: '*.js' }
     ];
     extension = extension ? '.' + extension.replace(/^\./, '') : '';
-    layout && ignore.push(layout);
+    layout && ignore.push(path_1.default.relative(src, layout));
     return {
         name: 'emit-ejs',
         async generateBundle(outputOptions) {
