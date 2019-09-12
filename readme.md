@@ -141,7 +141,7 @@ Default: `{}`
 >
 > In the layout, an extra `content` variable is passed containing the content to wrap into the layout.
 >
-> These variables need to be printed **unescaped** if you whish to use it as html, use the corresponding ejs tag: `<%-` (See [ejs tags](https://github.com/mde/ejs#tags))
+> These variables need to be printed **unescaped** if you wish to use it as html, use the corresponding ejs tag: `<%-` (See [ejs tags](https://github.com/mde/ejs#tags))
 
 ### options
 
