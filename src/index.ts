@@ -31,8 +31,8 @@ export default ({
   exclude = [],
   extension = undefined,
   layout = undefined,
-  javascript = file => `<script src=${file}></script>`,
-  stylesheet = file => `<link rel="stylesheet" href=${file}>`,
+  javascript = file => `<script src="${file}"></script>`,
+  stylesheet = file => `<link rel="stylesheet" href="${file}">`,
   data = {},
   options = {}
 }: {
