@@ -1,7 +1,8 @@
 import ejs from 'ejs';
 import { OutputOptions } from 'rollup';
-declare const _default: ({ src, include, exclude, extension, layout, javascript, stylesheet, data, options }: {
+declare const _default: ({ src, dest, include, exclude, extension, layout, javascript, stylesheet, data, options }: {
     src: string;
+    dest?: string | undefined;
     include?: string | string[] | undefined;
     exclude?: string | string[] | undefined;
     extension?: string | undefined;

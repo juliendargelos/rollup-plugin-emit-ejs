@@ -25,8 +25,15 @@ const render = async (
       { ...options, filename: file }
     )
 
+const destUnavailable = () => new Error(
+  'Cannot retreive destination directory: specify a destination' +
+  'by providing a path either in the dest plugin option, ' +
+  'or in the output.file or output.dir rollup option'
+)
+
 export default ({
   src,
+  dest = undefined,
   include = '**/*.ejs',
   exclude = [],
   extension = undefined,
@@ -37,6 +44,7 @@ export default ({
   options = {}
 }: {
   src: string
+  dest?: string,
   include?: string | string[]
   exclude?: string | string[]
   extension?: string
@@ -46,7 +54,7 @@ export default ({
   data: Data,
   options: Options
 }) => {
-  let dest: string, files: string[]
+  let files: string[]
   const ignore = Array.isArray(exclude) ? exclude : [exclude]
   const links = [
     { identifier: stylesheets, print: stylesheet, glob: '*.css' },
@@ -62,9 +70,11 @@ export default ({
     async generateBundle(outputOptions: OutputOptions) {
       const sourceFiles = await glob(include, { cwd: src, ignore })
 
-      dest = outputOptions.file
-        ? path.dirname(outputOptions.file)
-        : outputOptions.dir!
+      if (!dest) {
+        if (outputOptions.file) dest = path.dirname(outputOptions.file)
+        else if (outputOptions.dir) dest = outputOptions.dir
+        else throw destUnavailable()
+      }
 
       files = await Promise.all(sourceFiles.map(file => (async () => {
         const fileName = file.replace(/\.ejs$/, '') + extension
@@ -75,11 +85,13 @@ export default ({
           source: await render(src + '/' + file, layout, data, options)
         })
 
-        return path.resolve(dest, fileName)
+        return path.resolve(dest!, fileName)
       })()))
     },
 
     async writeBundle() {
+      if (!dest) throw destUnavailable()
+
       const builtLinks = await Promise.all(links.map(link => (async () => ({
         ...link,
         files: await glob(link.glob, { cwd: dest, absolute: true })

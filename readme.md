@@ -4,7 +4,7 @@ This plugin allows you to emit files from ejs templates to rollup bundle.
 
 It is primarily meant to emit html files since it helps you to link bundled javascripts/stylesheets and includes a basic layout system, but it can deal with any file type.
 
-Unlike [rollup-plugin-bundle-html](https://github.com/haifeng2013/rollup-plugin-bundle-html), this plugin uses the [emitFile()](https://rollupjs.org/guide/en/#thisemitfileemittedfile-emittedchunk--emittedasset--string) plugin context method which allow other plugins to process the emitted files.
+Unlike [rollup-plugin-bundle-html](https://github.com/haifeng2013/rollup-plugin-bundle-html), this plugin uses the [emitFile()](https://rollupjs.org/guide/en/#thisemitfileemittedfile-emittedchunk--emittedasset--string) plugin context method which allow other plugins like [html-minifier](https://github.com/juliendargelos/rollup-plugin-html-minifier) to process the emitted files.
 
 ## Install
 
@@ -72,6 +72,7 @@ This will emit a file named `index.html` next to the javascript bundle file.
 ```typescript
 {
   src: string
+  dest?: string
   include?: string | string[]
   exclude?: string | string[]
   extension?: string
@@ -88,6 +89,15 @@ This will emit a file named `index.html` next to the javascript bundle file.
 Source directory to find ejs templates from.
 
 Required
+
+### dest
+
+Directory where to output files from ejs templates.
+
+Default: either `output.file`, `output.dir` or `undefined` depending on your rollup configuration.
+
+> The destination directory is automatically inferred from your [rollup output options](https://rollupjs.org/guide/en/#outputdir) so it is the same of your bundle files. You can set it explicitly if none of `output.file`  and `output.dir` options are provided.
+> If the destination is neither provided by `dest`, `output.file` nor `output.dir` option, the plugin will throw an error.
 
 ### include
 

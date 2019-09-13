@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-emit-ejs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Emit files from ejs with rollup",
   "main": "index.js",
   "types": "index.d.ts",
@@ -9,18 +9,19 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev": "tsc -w --noEmit"
+    "dev": "tsc -w --noEmit",
+    "prepare": "install-peers"
   },
   "dependencies": {
+    "@types/ejs": "^2.6.3",
     "ejs": "^2.7.1",
     "fast-glob": "^3.0.4",
     "fs-extra": "^8.1.0"
   },
   "devDependencies": {
-    "@types/ejs": "^2.6.3",
     "@types/fs-extra": "^8.0.0",
     "@types/node": "^12.7.5",
-    "@types/rollup": "^0.54.0",
+    "install-peers-cli": "^2.1.1",
     "typescript": "^3.6.3"
   },
   "peerDependencies": {
