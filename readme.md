@@ -96,8 +96,7 @@ Directory where to output files from ejs templates.
 
 Default: either `output.file`, `output.dir` or `undefined` depending on your rollup configuration.
 
-> The destination directory is automatically inferred from your [rollup output options](https://rollupjs.org/guide/en/#outputdir) so it is the same of your bundle files. You can set it explicitly if none of `output.file`  and `output.dir` options are provided.
-> If the destination is neither provided by `dest`, `output.file` nor `output.dir` option, the plugin will throw an error.
+> The destination directory is automatically inferred from your [rollup output options](https://rollupjs.org/guide/en/#outputdir) so it is the same of your bundle files. You can set it explicitly if none of `output.file`  and `output.dir` options are provided or if you want another destination.
 
 ### include
 

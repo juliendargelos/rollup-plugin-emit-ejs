@@ -25,12 +25,6 @@ const render = async (
       { ...options, filename: file }
     )
 
-const destUnavailable = () => new Error(
-  'Cannot retreive destination directory: specify a destination' +
-  'by providing a path either in the dest plugin option, ' +
-  'or in the output.file or output.dir rollup option'
-)
-
 export default ({
   src,
   dest = undefined,
@@ -73,10 +67,9 @@ export default ({
       if (!dest) {
         if (outputOptions.file) dest = path.dirname(outputOptions.file)
         else if (outputOptions.dir) dest = outputOptions.dir
-        else throw destUnavailable()
       }
 
-      files = await Promise.all(sourceFiles.map(file => (async () => {
+      files = (await Promise.all(sourceFiles.map(file => (async () => {
         const fileName = file.replace(/\.ejs$/, '') + extension
 
         ;(this as unknown as PluginContext).emitFile({
@@ -85,12 +78,12 @@ export default ({
           source: await render(src + '/' + file, layout, data, options)
         })
 
-        return path.resolve(dest!, fileName)
-      })()))
+        return dest ? path.resolve(dest, fileName) : ''
+      })()))).filter(Boolean)
     },
 
     async writeBundle() {
-      if (!dest) throw destUnavailable()
+      if (!dest) return
 
       const builtLinks = await Promise.all(links.map(link => (async () => ({
         ...link,
