@@ -112,6 +112,12 @@ Default: `[]`
 
 > Note that the template provided in the `layout` option is automatically excluded.
 
+### layout
+
+Path to an ejs template to use as layout. Skip this option if you don't need layout.
+
+Default: `undefined`
+
 ### extension
 
 Extension to append to emitted files (the leading `.` can be omitted).
@@ -119,12 +125,6 @@ Extension to append to emitted files (the leading `.` can be omitted).
 Default: `undefined`
 
 > Note that the trailing `.ejs` extension is automatically removed from template filenames. So this option is useful if you only want to use the `.ejs` extension in your template filenames, but need to replace it with another extension like `.html`. Otherwise, you can just stack the output extension directly in the filename (`index.html.ejs`) and skip this option.
-
-### layout
-
-Path to an ejs template to use as layout. Skip this option if you don't need layout.
-
-Default: `undefined`
 
 ### data
 
