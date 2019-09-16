@@ -1,19 +1,16 @@
 import ejs from 'ejs';
-import { OutputOptions } from 'rollup';
-declare const _default: ({ src, dest, include, exclude, extension, layout, javascript, stylesheet, data, options }: {
+import { OutputBundle } from 'rollup';
+declare const _default: ({ src, dest, include, exclude, layout, extension, data, options }: {
     src: string;
     dest?: string | undefined;
     include?: string | string[] | undefined;
     exclude?: string | string[] | undefined;
-    extension?: string | undefined;
     layout?: string | undefined;
-    javascript?: ((file: string) => string) | undefined;
-    stylesheet?: ((file: string) => string) | undefined;
+    extension?: string | undefined;
     data: ejs.Data;
     options: ejs.Options;
 }) => {
     name: string;
-    generateBundle(outputOptions: OutputOptions): Promise<void>;
-    writeBundle(): Promise<void>;
+    generateBundle(_: unknown, bundle: OutputBundle): Promise<void>;
 };
 export default _default;

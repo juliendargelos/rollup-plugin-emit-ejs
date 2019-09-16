@@ -48,11 +48,15 @@ export default {
   <head>
     <meta charset="utf-8">
     <title><%= title %></title>
-    <%- stylesheets %>
+    <% stylesheets.forEach(stylesheet => { %>
+      <link rel="stylesheet" href="<%= stylesheet %>">
+    <% }) %>
   </head>
   <body>
     <%- content %>
-    <%- javascripts %>
+    <% javascripts.forEach(javascript => { %>
+      <script src="<%= javascript %>"></script>
+    <% }) %>
   </body>
 </html>
 ```
@@ -75,10 +79,8 @@ This will emit a file named `index.html` next to the javascript bundle file.
   dest?: string
   include?: string | string[]
   exclude?: string | string[]
-  extension?: string
   layout?: string
-  javascript?: (file: string) => string
-  stylesheet?: (file: string) => string
+  extension?: string
   data?: Data
   options?: Options
 }
@@ -92,11 +94,9 @@ Required
 
 ### dest
 
-Directory where to output files from ejs templates.
+Relative path from bundle location where to output files from ejs templates.
 
-Default: either `output.file`, `output.dir` or `undefined` depending on your rollup configuration.
-
-> The destination directory is automatically inferred from your [rollup output options](https://rollupjs.org/guide/en/#outputdir) so it is the same of your bundle files. You can set it explicitly if none of `output.file`  and `output.dir` options are provided or if you want another destination.
+Default: `'.'`
 
 ### include
 
@@ -126,18 +126,6 @@ Path to an ejs template to use as layout. Skip this option if you don't need lay
 
 Default: `undefined`
 
-### javascript
-
-Function called for printing script tags linking to javascript bundle files.
-
-Default: <code>file => &grave;&lt;script src="${file}"&gt;&lt;/script&gt;&grave;</code>
-
-### stylesheet
-
-Function called for printing link tags linking to css bundle files.
-
-Default: <code>file => &grave;&lt;link rel="stylesheet" href="${file}"&gt;&grave;</code>
-
 ### data
 
 Data to pass to ejs.
@@ -145,12 +133,10 @@ Data to pass to ejs.
 Default: `{}`
 
 > The following helper variables are forced by the plugin and available in all templates:
-> - `javascripts`: script tags linking to javascript bundles
-> - `stylesheets`: link tags linking to css bundles
+> - `javascripts`: array of relative paths to javascripts
+> - `stylesheets`: array of relative paths to stylesheets
 >
-> In the layout, an extra `content` variable is passed containing the content to wrap into the layout.
->
-> These variables need to be printed **unescaped** if you wish to use it as html, use the corresponding ejs tag: `<%-` (See [ejs tags](https://github.com/mde/ejs#tags))
+> In the layout, an extra `content` variable is passed containing the content to wrap into the layout. This variables need to be printed **unescaped** if you want to use it as html, use the corresponding ejs tag: `<%-` (See [ejs tags](https://github.com/mde/ejs#tags))
 
 ### options
 

@@ -7,56 +7,53 @@ const fs_extra_1 = __importDefault(require("fs-extra"));
 const path_1 = __importDefault(require("path"));
 const fast_glob_1 = __importDefault(require("fast-glob"));
 const ejs_1 = __importDefault(require("ejs"));
-const javascripts = `<emit-ejs-javascripts></emit-ejs-javascripts>`;
-const stylesheets = `<emit-ejs-stylesheets></emit-ejs-stylesheets>`;
-const render = async (file, layout, data, options) => layout
-    ? render(layout, undefined, {
-        ...data,
-        javascripts,
-        stylesheets,
-        content: await render(file, undefined, data, options)
-    }, options)
-    : ejs_1.default.render((await fs_extra_1.default.readFile(file)).toString(), { ...data, javascripts, stylesheets }, { ...options, filename: file });
-exports.default = ({ src, dest = undefined, include = '**/*.ejs', exclude = [], extension = undefined, layout = undefined, javascript = file => `<script src="${file}"></script>`, stylesheet = file => `<link rel="stylesheet" href="${file}">`, data = {}, options = {} }) => {
-    let files;
+exports.default = ({ src, dest = '.', include = '**/*.ejs', exclude = [], layout = undefined, extension = undefined, data = {}, options = {} }) => {
     const ignore = Array.isArray(exclude) ? exclude : [exclude];
-    const links = [
-        { identifier: stylesheets, print: stylesheet, glob: '*.css' },
-        { identifier: javascripts, print: javascript, glob: '*.js' }
-    ];
+    const relativeTo = (target) => {
+        target = path_1.default.dirname(target);
+        return (file) => path_1.default.relative(target, file);
+    };
     extension = extension ? '.' + extension.replace(/^\./, '') : '';
     layout && ignore.push(path_1.default.relative(src, layout));
     return {
         name: 'emit-ejs',
-        async generateBundle(outputOptions) {
-            const sourceFiles = await fast_glob_1.default(include, { cwd: src, ignore });
-            if (!dest) {
-                if (outputOptions.file)
-                    dest = path_1.default.dirname(outputOptions.file);
-                else if (outputOptions.dir)
-                    dest = outputOptions.dir;
+        async generateBundle(_, bundle) {
+            let render;
+            const templates = await fast_glob_1.default(include, { cwd: src, ignore });
+            const javascripts = [];
+            const stylesheets = [];
+            const dataFor = (fileName) => ({
+                ...data,
+                javascripts: javascripts.map(relativeTo(fileName)),
+                stylesheets: stylesheets.map(relativeTo(fileName))
+            });
+            if (layout) {
+                const renderLayout = ejs_1.default.compile((await fs_extra_1.default.readFile(layout)).toString(), { ...options, filename: layout });
+                render = async (template, fileName) => {
+                    const templateData = dataFor(fileName);
+                    return renderLayout({ ...templateData, content: ejs_1.default.render((await fs_extra_1.default.readFile(template)).toString(), templateData, { ...options, filename: template }) });
+                };
             }
-            files = (await Promise.all(sourceFiles.map(file => (async () => {
-                const fileName = file.replace(/\.ejs$/, '') + extension;
+            else {
+                render = async (template, fileName) => ejs_1.default.render((await fs_extra_1.default.readFile(template)).toString(), dataFor(fileName), { ...options, filename: template });
+            }
+            Object.values(bundle).forEach(file => {
+                switch (path_1.default.extname(file.fileName)) {
+                    case '.js':
+                        file.isEntry && javascripts.push(file.fileName);
+                        break;
+                    case '.css':
+                        file.type === 'asset' && stylesheets.push(file.fileName);
+                        break;
+                }
+            });
+            await Promise.all(templates.map(file => (async () => {
+                const fileName = path_1.default.join(dest, file.replace(/\.ejs$/, '') + extension);
                 this.emitFile({
                     type: 'asset',
                     fileName,
-                    source: await render(src + '/' + file, layout, data, options)
+                    source: await render(src + '/' + file, fileName)
                 });
-                return dest ? path_1.default.resolve(dest, fileName) : '';
-            })()))).filter(Boolean);
-        },
-        async writeBundle() {
-            if (!dest)
-                return;
-            const builtLinks = await Promise.all(links.map(link => (async () => ({
-                ...link,
-                files: await fast_glob_1.default(link.glob, { cwd: dest, absolute: true })
-            }))()));
-            await Promise.all(files.map(file => (async () => {
-                if (!(await fs_extra_1.default.pathExists(file)))
-                    return;
-                await fs_extra_1.default.writeFile(file, builtLinks.reduce((content, link) => (content.replace(link.identifier, link.files.map(linkFile => (link.print(path_1.default.relative(path_1.default.dirname(file), linkFile)))).join(''))), (await fs_extra_1.default.readFile(file)).toString()));
             })()));
         }
     };
