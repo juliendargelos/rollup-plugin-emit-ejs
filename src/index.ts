@@ -24,10 +24,13 @@ export default ({
   options: Options
 }) => {
   const ignore = Array.isArray(exclude) ? exclude : [exclude]
+
   const relativeTo = (target: string) => {
     target = path.dirname(target)
     return (file: string): string => path.relative(target, file)
   }
+
+  const getTemplates = () => glob(include, { cwd: src, ignore })
 
   extension = extension ? '.' + extension.replace(/^\./, '') : ''
   layout && ignore.push(path.relative(src, layout))
@@ -35,9 +38,16 @@ export default ({
   return {
     name: 'emit-ejs',
 
+    async buildStart() {
+      layout && (this as unknown as PluginContext).addWatchFile(layout)
+      ;(await getTemplates()).forEach(file => {
+        (this as unknown as PluginContext).addWatchFile(src + '/' + file)
+      })
+    },
+
     async generateBundle(_: unknown, bundle: OutputBundle) {
       let render: (template: string, fileName: string) => Promise<string>
-      const templates = await glob(include, { cwd: src, ignore })
+      const templates = await getTemplates()
       const javascripts: string[] = []
       const stylesheets: string[] = []
 

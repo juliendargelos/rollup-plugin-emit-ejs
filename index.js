@@ -13,13 +13,20 @@ exports.default = ({ src, dest = '.', include = '**/*.ejs', exclude = [], layout
         target = path_1.default.dirname(target);
         return (file) => path_1.default.relative(target, file);
     };
+    const getTemplates = () => fast_glob_1.default(include, { cwd: src, ignore });
     extension = extension ? '.' + extension.replace(/^\./, '') : '';
     layout && ignore.push(path_1.default.relative(src, layout));
     return {
         name: 'emit-ejs',
+        async buildStart() {
+            layout && this.addWatchFile(layout);
+            (await getTemplates()).forEach(file => {
+                this.addWatchFile(src + '/' + file);
+            });
+        },
         async generateBundle(_, bundle) {
             let render;
-            const templates = await fast_glob_1.default(include, { cwd: src, ignore });
+            const templates = await getTemplates();
             const javascripts = [];
             const stylesheets = [];
             const dataFor = (fileName) => ({

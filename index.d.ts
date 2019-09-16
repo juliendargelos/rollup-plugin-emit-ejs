@@ -11,6 +11,7 @@ declare const _default: ({ src, dest, include, exclude, layout, extension, data,
     options: ejs.Options;
 }) => {
     name: string;
+    buildStart(): Promise<void>;
     generateBundle(_: unknown, bundle: OutputBundle): Promise<void>;
 };
 export default _default;
