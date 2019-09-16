@@ -136,7 +136,7 @@ Default: `{}`
 > - `javascripts`: array of relative paths to javascripts
 > - `stylesheets`: array of relative paths to stylesheets
 >
-> In the layout, an extra `content` variable is passed containing the content to wrap into the layout. This variables need to be printed **unescaped** if you want to use it as html, use the corresponding ejs tag: `<%-` (See [ejs tags](https://github.com/mde/ejs#tags))
+> In the layout, an extra `content` variable is passed containing the content to wrap into the layout. This variable needs to be printed **unescaped** if you want to use it as html, use the corresponding ejs tag: `<%-` (See [ejs tags](https://github.com/mde/ejs#tags))
 
 ### options
 
