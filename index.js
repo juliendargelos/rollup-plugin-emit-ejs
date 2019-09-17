@@ -50,7 +50,8 @@ exports.default = ({ src, dest = '.', include = '**/*.ejs', exclude = [], layout
                         file.isEntry && javascripts.push(file.fileName);
                         break;
                     case '.css':
-                        file.type === 'asset' && stylesheets.push(file.fileName);
+                        (file.type === 'asset' ||
+                            file.isAsset) && stylesheets.push(file.fileName);
                         break;
                 }
             });

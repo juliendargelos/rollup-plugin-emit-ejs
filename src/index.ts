@@ -2,7 +2,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import glob from 'fast-glob'
 import ejs, { Data, Options } from 'ejs'
-import { PluginContext, OutputBundle, OutputChunk } from 'rollup'
+import { PluginContext, OutputBundle, OutputChunk, OutputAsset } from 'rollup'
 
 export default ({
   src,
@@ -86,7 +86,10 @@ export default ({
             (file as OutputChunk).isEntry && javascripts.push(file.fileName)
             break
           case '.css':
-           file.type === 'asset' && stylesheets.push(file.fileName)
+            (
+              file.type === 'asset' ||
+              (file as unknown as OutputAsset).isAsset
+            ) && stylesheets.push(file.fileName)
            break
         }
       })
