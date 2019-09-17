@@ -1,5 +1,5 @@
 import ejs from 'ejs';
-import { OutputBundle } from 'rollup';
+import { Plugin } from 'rollup';
 declare const _default: ({ src, dest, include, exclude, layout, extension, data, options }: {
     src: string;
     dest?: string | undefined;
@@ -9,9 +9,5 @@ declare const _default: ({ src, dest, include, exclude, layout, extension, data,
     extension?: string | undefined;
     data: ejs.Data;
     options: ejs.Options;
-}) => {
-    name: string;
-    buildStart(): Promise<void>;
-    generateBundle(_: unknown, bundle: OutputBundle): Promise<void>;
-};
+}) => Plugin;
 export default _default;

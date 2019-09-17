@@ -2,7 +2,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import glob from 'fast-glob'
 import ejs, { Data, Options } from 'ejs'
-import { PluginContext, OutputBundle, OutputChunk, OutputAsset } from 'rollup'
+import { Plugin, OutputBundle, OutputChunk, OutputAsset } from 'rollup'
 
 export default ({
   src,
@@ -22,7 +22,7 @@ export default ({
   extension?: string
   data: Data,
   options: Options
-}) => {
+}): Plugin => {
   const ignore = Array.isArray(exclude) ? exclude : [exclude]
 
   const relativeTo = (target: string) => {
@@ -39,9 +39,9 @@ export default ({
     name: 'emit-ejs',
 
     async buildStart() {
-      layout && (this as unknown as PluginContext).addWatchFile(layout)
+      layout && this.addWatchFile(layout)
       ;(await getTemplates()).forEach(file => {
-        (this as unknown as PluginContext).addWatchFile(src + '/' + file)
+       this.addWatchFile(src + '/' + file)
       })
     },
 
@@ -97,7 +97,7 @@ export default ({
       await Promise.all(templates.map(file => (async () => {
         const fileName = path.join(dest, file.replace(/\.ejs$/, '') + extension)
 
-        ;(this as unknown as PluginContext).emitFile({
+        this.emitFile({
           type: 'asset',
           fileName,
           source: await render(src + '/' + file, fileName)
