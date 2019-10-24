@@ -7,7 +7,7 @@ declare const _default: ({ src, dest, include, exclude, layout, extension, data,
     exclude?: string | string[] | undefined;
     layout?: string | undefined;
     extension?: string | undefined;
-    data: ejs.Data;
-    options: ejs.Options;
+    data?: ejs.Data | undefined;
+    options?: ejs.Options | undefined;
 }) => Plugin;
 export default _default;

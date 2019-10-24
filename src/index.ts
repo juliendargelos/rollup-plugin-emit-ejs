@@ -20,8 +20,8 @@ export default ({
   exclude?: string | string[]
   layout?: string
   extension?: string
-  data: Data,
-  options: Options
+  data?: Data
+  options?: Options
 }): Plugin => {
   const ignore = Array.isArray(exclude) ? exclude : [exclude]
 
