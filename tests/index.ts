@@ -16,7 +16,7 @@ afterAll(async () => {
   await fs.emptyDir(output)
 })
 
-it('should emit index templates to the output dir, with foo, javascripts and stylesheets variables', async () => {
+it('emits index templates to the output dir providing data', async () => {
   const bundle = await rollup({
     input: `${fixtures}/index.js`,
     plugins: [
@@ -48,7 +48,7 @@ it('should emit index templates to the output dir, with foo, javascripts and sty
   expect((await fs.readFile(`${output}/index.html`)).toString().trim()).toEqual('layout\nindex.js\nindex.css\nbar')
 })
 
-it('should emit page template adding .html extension, without layout', async () => {
+it('emits page template without layout adding .html extension', async () => {
   const bundle = await rollup({
     input: `${fixtures}/index.js`,
     plugins: [emitEJS({
