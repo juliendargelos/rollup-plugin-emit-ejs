@@ -1,4 +1,4 @@
-name: test
+name: build
 
 on:
   pull_request:
@@ -7,8 +7,8 @@ on:
     - master
 
 jobs:
-  test:
-    name: Test
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -19,5 +19,5 @@ jobs:
         node-version: 12.x
     - name: Install
       run: yarn install
-    - name: Test
-      run: yarn test
+    - name: Build
+      run: yarn build

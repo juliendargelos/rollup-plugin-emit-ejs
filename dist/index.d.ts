@@ -1,3 +1,4 @@
+/// <reference types="ejs" />
 import ejs from 'ejs';
 import { Plugin } from 'rollup';
 declare const _default: ({ src, dest, include, exclude, layout, extension, data, options }: {
@@ -10,4 +11,5 @@ declare const _default: ({ src, dest, include, exclude, layout, extension, data,
     data?: ejs.Data | undefined;
     options?: ejs.Options | undefined;
 }) => Plugin;
-export default _default;
+export { _default as default };
+//# sourceMappingURL=index.d.ts.map

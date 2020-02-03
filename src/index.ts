@@ -15,7 +15,7 @@ export default ({
   options = {}
 }: {
   src: string
-  dest?: string,
+  dest?: string
   include?: string | string[]
   exclude?: string | string[]
   layout?: string
@@ -25,12 +25,15 @@ export default ({
 }): Plugin => {
   const ignore = Array.isArray(exclude) ? exclude : [exclude]
 
-  const relativeTo = (target: string) => {
+  const relativeTo = (target: string): ((file: string) => string) => {
     target = path.dirname(target)
     return (file: string): string => path.relative(target, file)
   }
 
-  const getTemplates = () => glob(include, { cwd: src, ignore })
+  const getTemplates = (): Promise<string[]> => glob(include, {
+    cwd: src,
+    ignore
+  })
 
   extension = extension ? '.' + extension.replace(/^\./, '') : ''
   layout && ignore.push(path.relative(src, layout))
@@ -38,20 +41,23 @@ export default ({
   return {
     name: 'emit-ejs',
 
-    async buildStart() {
+    async buildStart(): Promise<void> {
       layout && this.addWatchFile(layout)
       ;(await getTemplates()).forEach(file => {
-       this.addWatchFile(src + '/' + file)
+        this.addWatchFile(src + '/' + file)
       })
     },
 
-    async generateBundle(_: unknown, bundle: OutputBundle) {
+    async generateBundle(_: unknown, bundle: OutputBundle): Promise<void> {
       let render: (template: string, fileName: string) => Promise<string>
       const templates = await getTemplates()
       const javascripts: string[] = []
       const stylesheets: string[] = []
 
-      const dataFor = (fileName: string) => ({
+      const dataFor = (fileName: string): Data & {
+        javascripts: string[]
+        stylesheets: string[]
+      } => ({
         ...data,
         javascripts: javascripts.map(relativeTo(fileName)),
         stylesheets: stylesheets.map(relativeTo(fileName))
@@ -90,7 +96,7 @@ export default ({
               file.type === 'asset' ||
               (file as unknown as OutputAsset).isAsset
             ) && stylesheets.push(file.fileName)
-           break
+            break
         }
       })
 
