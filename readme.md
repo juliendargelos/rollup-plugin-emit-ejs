@@ -1,5 +1,9 @@
 # rollup-plugin-emit-ejs
 
+[![test](https://github.com/juliendargelos/rollup-plugin-emit-ejs/workflows/test/badge.svg?branch=master)](https://github.com/juliendargelos/rollup-plugin-emit-ejs/actions?workflow=test)
+[![build](https://github.com/juliendargelos/rollup-plugin-emit-ejs/workflows/build/badge.svg?branch=master)](https://github.com/juliendargelos/rollup-plugin-emit-ejs/actions?workflow=build)
+[![version](https://img.shields.io/github/package-json/v/juliendargelos/rollup-plugin-emit-ejs)](https://github.com/juliendargelos/rollup-plugin-emit-ejs)
+
 This plugin allows you to emit files from ejs templates to rollup bundle.
 
 It is primarily meant to emit html files since it helps you to link bundled javascripts/stylesheets and includes a basic layout system, but it can deal with any file type.
