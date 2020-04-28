@@ -15,7 +15,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@types/ejs": "^3.0.2",
+    "@types/ejs": "^3.0.3",
     "ejs": "^3.1.2",
     "fast-glob": "^3.2.2",
     "fs-extra": "^8.1.0"
