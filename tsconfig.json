@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2017",
     "module": "es2015",
     "lib": ["es2017", "dom", "es6", "dom.iterable", "scripthost"],
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
     "strict": true,
     "experimentalDecorators": true,
     "noImplicitAny": true,
@@ -17,10 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["src/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["src"]
 }

@@ -1,4 +1,4 @@
-import { rollup } from 'rollup'
+import { rollup, OutputBundle } from 'rollup'
 import fs from 'fs-extra'
 import os from 'os'
 import emitFiles from 'rollup-plugin-emit-files'

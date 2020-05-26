@@ -3,6 +3,7 @@
   "version": "3.0.0",
   "description": "Emit files from ejs with rollup",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "repository": "juliendargelos/rollup-plugin-emit-ejs",
   "author": "Julien Dargelos <contact@juliendargelos.com>",
@@ -21,24 +22,23 @@
     "fs-extra": "^8.1.0"
   },
   "devDependencies": {
-    "@rollup/plugin-alias": "^3.1.0",
     "@types/fs-extra": "^8.1.0",
     "@types/jest": "^25.2.3",
     "@types/node": "^13.13.5",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "eslint": "^6.8.0",
-    "jest": "^25.5.4",
-    "rollup": "^1.32.1",
+    "jest": "^26.0.1",
+    "rollup": "^2.10.0",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-cleaner": "^1.0.0",
-    "rollup-plugin-emit-files": "^1.0.0",
+    "rollup-plugin-emit-files": "^1.1.0",
     "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-ts": "^1.2.24",
-    "ts-jest": "^25.5.1",
+    "ts-jest": "^26.0.0",
     "typescript": "^3.9.3"
   },
   "peerDependencies": {
-    "rollup": "^1.32.1"
+    "rollup": "^2.10.0"
   }
 }

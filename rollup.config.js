@@ -1,29 +1,21 @@
+import path from 'path'
 import autoExternal from 'rollup-plugin-auto-external'
 import cleaner from 'rollup-plugin-cleaner'
-import alias from '@rollup/plugin-alias'
 import ts from 'rollup-plugin-ts'
 import { eslint } from 'rollup-plugin-eslint'
 
 import pkg from './package.json'
-import tsconfig from './tsconfig.json'
 
 export default {
   input: 'src/index.ts',
-  output: {
-    sourcemap: true,
-    file: pkg.main,
-    format: 'cjs'
-  },
+  output: [
+    { file: pkg.main, format: 'cjs' },
+    { file: pkg.module, format: 'es' }
+  ],
   plugins: [
-    alias({
-      resolve: ['.ts'],
-      entries: Object
-        .entries(tsconfig.compilerOptions.paths)
-        .map(([find, [replacement]]) => ({ find, replacement }))
-    }),
+    cleaner({ targets: [path.dirname(pkg.main)] }),
+    autoExternal(),
     eslint(),
-    ts(),
-    cleaner({ targets: [pkg.main.replace(/\/[^\/]+$/, '')] }),
-    autoExternal()
+    ts()
   ]
 }
