@@ -36,7 +36,7 @@
     "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-ts": "^1.2.28",
     "ts-jest": "^26.1.2",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.7"
   },
   "peerDependencies": {
     "rollup": "^2.21.0"
