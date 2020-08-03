@@ -34,7 +34,7 @@
     "rollup-plugin-cleaner": "^1.0.0",
     "rollup-plugin-emit-files": "^1.1.0",
     "rollup-plugin-eslint": "^7.0.0",
-    "rollup-plugin-ts": "^1.2.29",
+    "rollup-plugin-ts": "^1.3.0",
     "ts-jest": "^26.1.4",
     "typescript": "^3.9.7"
   },
