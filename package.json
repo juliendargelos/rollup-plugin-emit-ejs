@@ -18,7 +18,7 @@
   "dependencies": {
     "@types/ejs": "^3.0.7",
     "ejs": "^3.1.6",
-    "fast-glob": "^3.2.6",
+    "fast-glob": "^3.2.7",
     "fs-extra": "^9.1.0"
   },
   "devDependencies": {
